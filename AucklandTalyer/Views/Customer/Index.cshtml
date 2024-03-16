@@ -1,27 +1,38 @@
-﻿@model IEnumerable<AucklandTalyer.Models.Dto.CustomerListDto>
-
+﻿@model IEnumerable<AucklandTalyer.Models.tblCustomer>
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-primary">Customer List</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="Customer" asp-action="Create" class="btn btn-primary">Add New Customer</a>
+        </div>
+       
+    </div>
 <table class="table table-bodered table-striped">
     <thead>
         <tr>
-            <th>Customer ID</th>
+            <th></th>
+            <th>Rego</th>
             <th>Customer Name</th>
-            <th>Total Price</th>
-            <th>Payment Status</th>
-            <th>Work Status</th>
-         @*    <th></th> *@
+            <th>Car Make</th>
+            <th>Car Model</th>
+            <th>Payment Status</th> 
+            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var customer in Model)
         {
-            <tr>
-                <td>@customer.CustomerId</td>
+            <tr> 
+                <td><a href="/GRPOGreenBeans/Create?transNo= + @customer.CarRego" style="color: #3895D3 !important;"> @customer.CarRego</a></td>
                 <td>@customer.CustomerName</td>
-                <td>@customer.TotalPrice</td>
+                <td>@customer.CarMake</td>
+                <td>@customer.CarModel</td>
                 <td>@customer.PaymentStatus</td>
-                <td>@customer.WorkStatus</td>
             </tr>
         }
     </tbody>
 
 </table>
+</div>

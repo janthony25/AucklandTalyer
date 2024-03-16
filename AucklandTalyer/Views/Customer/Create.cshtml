@@ -1,0 +1,35 @@
+﻿@model tblCustomer
+
+<form method="post">
+    <div class="form-group">
+        <label asp-for="CarRego"></label>
+        <input asp-for="CarRego" class="form-control" />
+        <span asp-validation-for="CarRego"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CustomerName"></label>
+        <input asp-for="CustomerName" class="form-control" />
+        <span asp-validation-for="CustomerName"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CarMake"></label>
+        <input asp-for="CarMake" class="form-control" />
+        <span asp-validation-for="CarMake"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="CarModel"></label>
+        <input asp-for="CarModel" class="form-control" />
+        <span asp-validation-for="CarModel"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PaymentStatus"></label>
+        <select asp-for="PaymentStatus" class="form-select form-select-lg mb-3">
+            <option selected>Select Payment Status</option>
+            <option value="Paid">Paid</option>
+            <option value="Not Paid">Not Paid</option>
+        </select>
+        <span asp-validation-for="PaymentStatus"></span>
+    </div>
+    <button type="Submit" class="btn btn-primary">Submit</button>
+   <a asp-controller="Customer" asp-action="Index" class="btn btn-secondary">Back To List</a>
+</form>
