@@ -15,5 +15,7 @@ namespace AucklandTalyer.Models
         public string? AddedBy { get; set; }
         public DateTime? DateUpdated { get; set; }
         public string? UpdatedBy { get; set; }
+        public string? PaymentStatus { get; set; }
+        public string? WorkStatus { get; set; }
     }
 }
