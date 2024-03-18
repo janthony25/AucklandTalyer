@@ -12,7 +12,7 @@ namespace AucklandTalyer.Models
         public DateTime? DateAdded { get; set; }
         public string? AddedBy { get; set; }
         public string WorkStatus { get; set; }
-        public int? CustomerId { get; set; }
+        public string? CarRego { get; set; }
 
     }
 }

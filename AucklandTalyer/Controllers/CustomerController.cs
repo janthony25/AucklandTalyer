@@ -41,6 +41,18 @@ namespace AucklandTalyer.Controllers
             return View(customer);
         }
 
+        public IActionResult Edit(string Rego)
+        {
+            if(Rego == null)
+            {
+                return NotFound();
+            }
+           // var customer = _db.tblCustomer.FirstOrDefault(u => u.CarRego == Rego);
+           List<tblCustomer> customer = _db.tblCustomer.Where(u => u.CarRego == Rego).ToList();
+           
+            return View(customer);
+        }
+
         //[HttpPost]
         //[ValidateAntiForgeryToken]
        //public async Task<IActionResult> Create([Bind("CustomerName", "CarMake", "CarModel", "CarRego")]tblCustomer customer)
