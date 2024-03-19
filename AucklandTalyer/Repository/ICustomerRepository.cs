@@ -7,6 +7,8 @@ namespace AucklandTalyer.Repository
     {
         // public List<CustomerListDto> GetCustomer();
         public List<tblCustomer> GetAll();
+          public List<CustomerIssueDto> GetIssue(string Rego);
+        //public void GetIssue(string Rego);
         //public tblCustomer GetCustomerId();
     }
 }

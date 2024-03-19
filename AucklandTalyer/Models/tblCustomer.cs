@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AucklandTalyer.Models
 {
@@ -15,5 +16,7 @@ namespace AucklandTalyer.Models
         public DateTime? DateUpdated { get; set; }
         public string? UpdatedBy { get; set; }
         public string? PaymentStatus { get; set; }
+
+        public List<tblIssue> Issues { get; set; }
     }
 }

@@ -1,0 +1,24 @@
+﻿@model tblIssue
+
+<div class="container">
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="CarRego">Car Rego: </label>
+        <input asp-for="CarRego" value="@ViewBag.targetId" readonly />
+    </div>
+        <div class="form-group">
+            <label asp-for="IssueName"></label>
+            <input asp-for="IssueName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="IssueDescription"></label>
+            <input asp-for="IssueDescription" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="WorkStatus"></label>
+            <input asp-for="WorkStatus" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-info">Submit</button>
+
+</form>
+</div>

@@ -1,4 +1,4 @@
-﻿@model List<tblCustomer>
+﻿@model List<AucklandTalyer.Models.Dto.CustomerIssueDto>
 
 
 <div class="container mt-4">
@@ -7,11 +7,11 @@
     <div class="border border-secondary p-3 col-3 mb-4">
         @foreach(var customer in Model)
         {
-            <span class="fw-bold">Rego:</span> @customer.CarRego <br />
-            <span class="fw-bold">Customer Name:</span> @customer.CustomerName <br />
-            <span class="fw-bold">Car Make:</span> @customer.CarMake <br />
-            <span class="fw-bold">Car Model:</span> @customer.CarModel <br />
-            <span class="fw-bold">Payment Status:</span> @customer.PaymentStatus <br />
+            <p><span class="text-info">Rego:</span><span class="fw-bold"> @customer.CarRego</span></p>
+            <p><span class="text-info">Customer Name:</span><span class="fw-bold"> @customer.CustomerName</span></p>
+            <p><span class="text-info">Car Make:</span><span class="fw-bold"> @customer.CarMake</span> </p>
+            <p><span class="text-info">Car Model:</span><span class="fw-bold"> @customer.CarModel</span> </p>
+            <p><span class="text-info">Payment Status:</span><span class="fw-bold"> @customer.PaymentStatus</span> </p>
         }
     </div>
     <div>
@@ -20,17 +20,32 @@
                 <h3 class="text-info">Car Issue</h3>
             </div>
             <div class="col-6 text-end">
-                <a class="btn btn-primary text-uppercase"><i class="bi bi-plus-circle"></i> Add Item</a>
+                @foreach(var cust in Model)
+                {
+                   <a asp-controller="Issue" asp-action="Create" asp-route-Rego="@cust.CarRego" class="btn btn-warning text-uppercase"><i class="bi bi-plus-circle"></i> Add Item</a>
+                }
             </div>
         </div>
-        <table class="table table-bordered table-striped">
-            <thead class="text-center align-middle">
-                <tr>
-                    <th>Problem</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-        </table>
+            <table class="table table-bordered table-striped">
+                <thead class="text-center align-middle">
+                    <tr>
+                        <th>Problem</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach(var issue in Model)
+                {
+                    <tr>
+                        <td>@issue.IssueName</td>
+                        <td>@issue.IssueDescription</td>
+                    </tr>
+                }
+            </tbody>
+
+            </table>
+    </div>
+        
     </div>
 
    

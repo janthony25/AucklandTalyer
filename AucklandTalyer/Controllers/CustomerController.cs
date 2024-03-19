@@ -1,5 +1,6 @@
 ﻿using AucklandTalyer.Data;
 using AucklandTalyer.Models;
+using AucklandTalyer.Models.Dto;
 using AucklandTalyer.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,12 +45,12 @@ namespace AucklandTalyer.Controllers
         public IActionResult Edit(string Rego)
         {
             if(Rego == null)
-            {
+            {   
                 return NotFound();
             }
-           // var customer = _db.tblCustomer.FirstOrDefault(u => u.CarRego == Rego);
-           List<tblCustomer> customer = _db.tblCustomer.Where(u => u.CarRego == Rego).ToList();
-           
+            // var customer = _db.tblCustomer.FirstOrDefault(u => u.CarRego == Rego);
+            List<CustomerIssueDto> customer = _customerRepository.GetIssue(Rego);
+           // _customerRepository.GetIssue(Rego);
             return View(customer);
         }
 
