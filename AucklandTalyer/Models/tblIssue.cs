@@ -11,7 +11,7 @@ namespace AucklandTalyer.Models
         public float? TotalPrice { get; set; }
         public DateTime? DateAdded { get; set; }
         public string? AddedBy { get; set; }
-        public string WorkStatus { get; set; }
+        public string? WorkStatus { get; set; }
         public string? CarRego { get; set; }
 
     }
