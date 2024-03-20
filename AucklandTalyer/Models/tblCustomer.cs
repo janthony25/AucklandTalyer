@@ -17,6 +17,6 @@ namespace AucklandTalyer.Models
         public string? UpdatedBy { get; set; }
         public string? PaymentStatus { get; set; }
 
-        public List<tblIssue>? Issues { get; set; }
+      //  public List<tblIssue>? Issues { get; set; }
     }
 }

@@ -20,10 +20,9 @@
                 <h3 class="text-info">Car Issue</h3>
             </div>
             <div class="col-6 text-end">
-                @foreach(var cust in Model)
-                {
-                   <a asp-controller="Issue" asp-action="Create" asp-route-Rego="@cust.CarRego" class="btn btn-warning text-uppercase"><i class="bi bi-plus-circle"></i> Add Item</a>
-                }
+                
+                   <a asp-controller="Issue" asp-action="Create" asp-route-Rego="@Model.FirstOrDefault().CarRego" class="btn btn-warning text-uppercase"><i class="bi bi-plus-circle"></i> Add Item</a>
+                
             </div>
         </div>
             <table class="table table-bordered table-striped">

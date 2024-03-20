@@ -1,7 +1,7 @@
 ﻿@model tblIssue
 
 <div class="container">
-<form asp-action="Create" method="post">
+<form asp-controller="Issue" asp-action="Create" method="post">
     <div class="form-group">
         <label asp-for="CarRego">Car Rego: </label>
         <input asp-for="CarRego" value="@ViewBag.targetId" readonly />
