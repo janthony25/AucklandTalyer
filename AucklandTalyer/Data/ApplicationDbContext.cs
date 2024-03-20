@@ -12,5 +12,6 @@ namespace AucklandTalyer.Data
 
         public DbSet<tblCustomer> tblCustomer { get; set; }
         public DbSet<tblIssue> tblIssue { get; set; }
+        public DbSet<tblParts> tblParts { get; set; }
     }
 }
