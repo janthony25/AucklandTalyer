@@ -1,5 +1,6 @@
 ﻿using AucklandTalyer.Data;
 using AucklandTalyer.Models;
+using AucklandTalyer.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AucklandTalyer.Controllers
@@ -7,9 +8,11 @@ namespace AucklandTalyer.Controllers
     public class PartsController : Controller
     {
         private readonly ApplicationDbContext _db;
-        public PartsController(ApplicationDbContext db)
+        private readonly ICommonRepository _commonRepository;
+        public PartsController(ApplicationDbContext db, ICommonRepository commonRepository)
         {
             _db = db;
+            _commonRepository = commonRepository;
         }
         public IActionResult Index()
         {
@@ -45,12 +48,17 @@ namespace AucklandTalyer.Controllers
                 return NotFound();
             }
             var targetParts = _db.tblParts.FirstOrDefault(x => x.PartsId == id);
+
+            if (targetParts == null)
+            {
+                return NotFound();
+            }
             return View(targetParts);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit([Bind("PartsName", "PartsPrice")] tblParts parts)
+        public async Task<IActionResult> Edit([Bind("PartsId","PartsName", "PartsPrice")] tblParts parts)
         {
             if(ModelState.IsValid)
             {
@@ -62,5 +70,50 @@ namespace AucklandTalyer.Controllers
             }
             return View(parts);
         }
+
+        // GET
+        //public IActionResult Delete(int id)
+        //{
+        //    if (id == null || id == 0)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    var targetId = _db.tblParts.FirstOrDefault(x => x.PartsId == id);
+
+        //    if (targetId == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(targetId);
+        //}
+
+       
+       
+
+        public IActionResult DeletePost(int id)
+        {
+            var targetId = _db.tblParts.FirstOrDefault(x => x.PartsId == id);
+            if (targetId == null)
+            {
+                return NotFound();
+            }
+
+            _db.tblParts.Remove(targetId);
+            _db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult GetPartsData()
+        {
+            // Retrieve data from your data source (e.g., database)
+            var data = _commonRepository.GetPartsData();
+            var json = Json(data);
+            // Return data as JSON
+            return Json(data);
+        }
+
     }
 }

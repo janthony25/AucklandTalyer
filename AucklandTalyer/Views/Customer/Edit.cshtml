@@ -1,6 +1,7 @@
 ﻿@model List<AucklandTalyer.Models.Dto.CustomerIssueDto>
 
 
+
 <div class="container mt-4">
     <h2 class="text-info">Customer Details</h2>
 
@@ -30,14 +31,20 @@
                     <tr>
                         <th>Problem</th>
                         <th>Description</th>
+                        <th></th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-center align-center">
                 @foreach(var issue in Model)
                 {
-                    <tr>
+                    <tr class="align-center">
                         <td>@issue.IssueName</td>
                         <td>@issue.IssueDescription</td>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Launch demo modal
+                            </button>
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -46,6 +53,79 @@
     </div>
         
     </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Parts</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-striped" id="partsTable">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Part Name</th>
+                            <th>Price ($)</th>
+                        </tr>
+                    </thead>
+                     <tbody>
+                    </tbody> 
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="saveSelectedRowsBtn" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () 
+    {
+        // AJAX request to the server to retrieve data
+        $.ajax({
+            url: "/Parts/GetPartsData",
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                // On successful response, call a function to populate the table
+                populateTable(data);
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+        $('#saveSelectedRowsBtn').click(function () {
+            var checkedRows = [];
+            $('input[name="selectedRows"]:checked').each(function () {
+                var id = $(this).val();
+                var name = $(this).closest('tr').find('td:eq(1)').text(); // Get the name from the second column
+                var price = $(this).closest('tr').find('td:eq(2)').text(); // Get Price from the 3rd column
+                checkedRows.push({ id: id, name: name, price: price });
+            });
+            console.log(checkedRows); // Output checked rows to console
+        
+        });
+
+    });
+
+    function populateTable(data) {
+        // Clear existing table rows
+        $('#partsTable tbody').empty();
+
+        // Iterate through the data and populate table rows
+        $.each(data, function (index, item) {
+            // Append a new row to the table body
+         //   $('#partsTable tbody').append('<tr><td value="item.partsId">' + <label value="item.partsId" class="form-check-label" for= "flexCheckDefault" > + '</td><td value="item.partsName">' + item.partsName + '</td></tr>');
+            $('#partsTable tbody').append('<tr><td><input name="selectedRows" class="form-check-input" type="checkbox" id="checkbox_' + item.partsId + '" value="' + item.partsId + '"></td><td>' + item.partsName + '</td><td>' + item.partsPrice + '</tr>');
+
+        });
+    }
 
    
-</div>
+</script>
