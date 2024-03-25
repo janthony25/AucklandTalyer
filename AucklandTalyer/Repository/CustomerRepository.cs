@@ -69,6 +69,7 @@ namespace AucklandTalyer.Repository
                                     CarMake = customer.CarMake,
                                     CarModel = customer.CarModel,
                                     PaymentStatus = customer.PaymentStatus,
+                                    IssueId = joinedCustomer != null ? joinedCustomer.IssueId : 0,
                                     IssueName = joinedCustomer != null ? joinedCustomer.IssueName : "",
                                     IssueDescription = joinedCustomer != null ? joinedCustomer.IssueDescription : ""
                                 };
@@ -83,6 +84,7 @@ namespace AucklandTalyer.Repository
                     CarMake = x.CarMake,
                     CarModel = x.CarModel,
                     PaymentStatus = x.PaymentStatus,
+                    IssueId = x.IssueId,
                     IssueName = x.IssueName,
                     IssueDescription = x.IssueDescription
                 })

@@ -1,5 +1,6 @@
 ﻿using AucklandTalyer.Data;
 using AucklandTalyer.Models;
+using AucklandTalyer.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AucklandTalyer.Controllers
@@ -7,9 +8,11 @@ namespace AucklandTalyer.Controllers
     public class IssueController : Controller
     {
         private readonly ApplicationDbContext _db;
-        public IssueController(ApplicationDbContext db)
+        private readonly ICommonRepository _commonRepository;
+        public IssueController(ApplicationDbContext db, ICommonRepository commonRepository)
         {
             _db = db;
+            _commonRepository = commonRepository;
         }
         public IActionResult Index()
         {
@@ -37,6 +40,15 @@ namespace AucklandTalyer.Controllers
                 return RedirectToAction("Index");
             }
             return View();
+        }
+
+        public IActionResult GetIssuePartsData()
+        {
+            // Retrieve data from your data source (e.g., database)
+            var data = _commonRepository.GetIssuePartsData();
+            var json = Json(data);
+            // Return data as JSON
+            return Json(data);
         }
 
 

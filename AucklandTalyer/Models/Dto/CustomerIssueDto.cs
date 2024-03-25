@@ -8,6 +8,7 @@
         public string? CarMake { get; set; }
 
         public string? PaymentStatus { get; set; }
+        public int IssueId { get; set; }
 
         public string? IssueName { get; set; }
         public string? IssueDescription { get; set; }

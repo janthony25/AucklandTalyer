@@ -1,5 +1,6 @@
 ﻿using AucklandTalyer.Data;
 using AucklandTalyer.Models;
+using AucklandTalyer.Models.Dto;
 using AucklandTalyer.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -106,6 +107,7 @@ namespace AucklandTalyer.Controllers
             return RedirectToAction("Index");
         }
 
+        // GET data in Parts Table 
         public IActionResult GetPartsData()
         {
             // Retrieve data from your data source (e.g., database)
@@ -114,6 +116,24 @@ namespace AucklandTalyer.Controllers
             // Return data as JSON
             return Json(data);
         }
+
+        [HttpPost]
+        public IActionResult AddPartsInIssue(List<tblIssueWithParts> selectedRows)
+        {
+            foreach (var parts in selectedRows)
+            {
+                var newRow = new tblIssueWithParts()
+                {
+                    IssueId = parts.IssueId,
+                    PartsId = parts.PartsId,
+                    DateAdded = DateTime.Now,
+                    AddedBy = "Admin"
+                };
+                _db.tblIssueWithParts.Add(newRow);
+            }
+            _db.SaveChanges();
+            return Json(new { success = true, message = "Parts added successfully." });
+        }   
 
     }
 }

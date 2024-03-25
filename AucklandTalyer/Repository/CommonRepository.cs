@@ -16,5 +16,11 @@ namespace AucklandTalyer.Repository
             var partsList = _db.tblParts.ToList();
             return partsList;
         }
-    }
+
+        public List<tblIssueWithParts> GetIssuePartsData()
+        {
+            var issueWithPartsList = _db.tblIssueWithParts.ToList();
+            return issueWithPartsList;
+        }
+    } 
 }
