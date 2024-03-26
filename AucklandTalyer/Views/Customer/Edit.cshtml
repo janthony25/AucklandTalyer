@@ -155,19 +155,7 @@
             }
         });
 
-        // RETRIVE DATA OF PARTS NEED IN MODAL
-        $.ajax({
-            url: "/Issue/GetIssuePartsData",
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                // On successful response, call a function to populate the table
-                populateIssueWithPartsTable(data);
-            },
-            error: function (xhr, status, error) {
-                console.error(xhr.responseText);
-            }
-        });
+        
         
         // Pass data of checked check box
         $('#saveSelectedRowsBtn').click(function () {
@@ -189,6 +177,34 @@
                 success: function (response) {
                     // Handle success response
                     console.log('Selected rows saved successfully.');
+                },
+                error: function (xhr, status, error) {
+                    // Handle error
+                    console.error('Error:', error);
+                }
+            });
+
+            // RETRIVE DATA OF PARTS NEED IN MODAL
+
+            $.ajax({
+                url: '@Url.Action("GetPartsDetails", "Parts")', // Change this URL to your endpoint to fetch parts details
+                type: 'POST',
+                data: { partsIds: checkedRows.map(row => row.partsId) }, // Pass array of partsIds
+                success: function (response) {
+                    // Process response
+                    console.log('Parts details retrieved successfully:', response);
+
+                    // Clear existing table rows
+                    $('#issueWithPartsTable tbody').empty();
+
+                    // Iterate through the response and populate the table rows
+                    response.forEach(function (part) {
+                        // Append a new row to the table body
+                        $('#issueWithPartsTable tbody').append('<tr><td>' + part.partsName + '</td><td>' + part.partsPrice + '</td></tr>');
+                    });
+
+                    // Show the modal
+                   // $('#anotherModal').modal('show');
                 },
                 error: function (xhr, status, error) {
                     // Handle error
@@ -220,18 +236,18 @@
 
 
     // PUPULATE DATA TABLE FOR ISSUE WITH PARTS TBALE
-    function populateIssueWithPartsTable(data) {
-        // Clear existing table rows
-        $('#issueWithPartsTable tbody').empty();
+    // function populateIssueWithPartsTable(data) {
+    //     // Clear existing table rows    
+    //     $('#issueWithPartsTable tbody').empty();
 
-        // Iterate through the data and populate table rows
-        $.each(data, function (index, item) {
-            // Append a new row to the table body
-            //   $('#partsTable tbody').append('<tr><td value="item.partsId">' + <label value="item.partsId" class="form-check-label" for= "flexCheckDefault" > + '</td><td value="item.partsName">' + item.partsName + '</td></tr>');
-            $('#issueWithPartsTable tbody').append('<tr><td>' + item.partsName + '</td><td>' + item.partsPrice + '</tr>');
+    //     // Iterate through the data and populate table rows
+    //     $.each(data, function (index, item) {
+    //         // Append a new row to the table body
+    //         //   $('#partsTable tbody').append('<tr><td value="item.partsId">' + <label value="item.partsId" class="form-check-label" for= "flexCheckDefault" > + '</td><td value="item.partsName">' + item.partsName + '</td></tr>');
+    //         $('#issueWithPartsTable tbody').append('<tr><td>' + item.partsName + '</td><td>' + item.partsPrice + '</tr>');
 
-        });
-    }
+    //     });
+    // }
 
    
 </script>

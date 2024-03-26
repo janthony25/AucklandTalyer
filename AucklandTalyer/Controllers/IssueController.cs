@@ -9,10 +9,12 @@ namespace AucklandTalyer.Controllers
     {
         private readonly ApplicationDbContext _db;
         private readonly ICommonRepository _commonRepository;
-        public IssueController(ApplicationDbContext db, ICommonRepository commonRepository)
+        private readonly IPartsIssueRepository _partsIssueRepository;
+        public IssueController(ApplicationDbContext db, ICommonRepository commonRepository, IPartsIssueRepository partsIssueRepository)
         {
             _db = db;
             _commonRepository = commonRepository;
+            _partsIssueRepository = partsIssueRepository;
         }
         public IActionResult Index()
         {
@@ -49,6 +51,12 @@ namespace AucklandTalyer.Controllers
             var json = Json(data);
             // Return data as JSON
             return Json(data);
+        }
+
+        public IActionResult GetParts(int id)
+        {
+            var partWithIssue = _partsIssueRepository.GetParts(id);
+            return Json(partWithIssue);
         }
 
 
