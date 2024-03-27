@@ -11,7 +11,7 @@ namespace AucklandTalyer.Repository
             _db = db;
         }
 
-        public List<IssueWithPartsDto> GetParts(int id)
+        public List<IssueWithPartsDto> GetPartsInIssue(int id)
         {
             var issueWithPartsQuery =   from parts in _db.tblParts
                                         join issueWithParts in _db.tblIssueWithParts

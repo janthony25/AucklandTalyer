@@ -53,9 +53,9 @@ namespace AucklandTalyer.Controllers
             return Json(data);
         }
 
-        public IActionResult GetParts(int id)
+        public IActionResult GetPartsInIssue(int id)
         {
-            var partWithIssue = _partsIssueRepository.GetParts(id);
+            var partWithIssue = _partsIssueRepository.GetPartsInIssue(id);
             return Json(partWithIssue);
         }
 
