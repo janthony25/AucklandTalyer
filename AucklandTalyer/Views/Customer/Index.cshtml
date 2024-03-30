@@ -17,11 +17,16 @@
             <th>Car Make</th>
             <th>Car Model</th>
             <th>Payment Status</th> 
+            <th>Date Added</th>
             <th></th>
         </tr>
     </thead>
     <tbody class="text-center align-middle">
-        @foreach (var customer in Model)
+            @{
+                // Sort the Model by DateAdded in descending order
+                var sortedModel = Model.OrderByDescending(c => c.DateAdded);
+            }
+        @foreach (var customer in sortedModel)
         {
             <tr> 
                 <td><a href="/GRPOGreenBeans/Create?transNo= + @customer.CarRego" style="color: #3895D3 !important;"> @customer.CarRego</a></td>
@@ -29,6 +34,7 @@
                 <td>@customer.CarMake</td>
                 <td>@customer.CarModel</td>
                 <td>@customer.PaymentStatus</td>
+                <td>@customer.DateAdded.ToString("yyy-MM-dd")</td>
                 <td class="">
                     <div class="d-flex">
                             <a asp-controller="Customer" asp-action="Edit" asp-route-Rego="@customer.CarRego" class="btn btn-warning"><i class="bi bi-plus-square"></i></a>

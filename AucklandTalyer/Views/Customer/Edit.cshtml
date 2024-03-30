@@ -10,8 +10,8 @@
             <p><span class="text-info">Customer Name:</span><span class="fw-bold"> @Model[0].CustomerName</span></p>
             <p><span class="text-info">Car Make:</span><span class="fw-bold"> @Model[0].CarMake</span> </p>
             <p><span class="text-info">Car Model:</span><span class="fw-bold"> @Model[0].CarModel</span> </p>
-            <p><span class="text-info">Payment Status:</span><span class="fw-bold"> @Model[0].PaymentStatus</span> </p>   
-            @* <p>@Model.FirstOrDefault().</p> *@
+            <p><span class="text-info">Payment Status:</span><span class="fw-bold"> @Model[0].PaymentStatus</span> </p>
+        @* <p>@Model.FirstOrDefault().</p> *@
     </div>
     <div>
         <div class="row mb-2">
@@ -63,20 +63,22 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header d-flex justify-content-between">
-                
+                    
                     <div>
-                        <h5>
-                        Car Issue: @foreach (var issue in Model)
-                        {
-                            <span class="fw-bold">@issue.IssueName</span>
-                        }
-                    </h5>
+                        @* <h5>
+                        Car Issue: 
+                        
+                            <span class="fw-bold">@Model.FirstOrDefault().IssueName</span>
+                        
+                    </h5> *@
+                    <h5 class="modal-title fw-bold" id="modalIssueName"></h5>
                     </div>
                     <div>
                             <div>
-                            <button type="button" data-value="@Model[0].IssueId" id="btnAddPartsModal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPartsModal">
+                            @* <button type="button" data-value="@Model[0].IssueId" id="btnAddPartsModal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPartsModal"> *@
+                        <button type="button" data-value="" id="btnAddPartsModal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPartsModal">
                                     Add Parts Need
-                                </button>
+                        </button>
                             </div>   
                     </div>
             </div>
@@ -107,7 +109,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Add Parts</h5>
-                <label id="modalValue" hidden></label> 
+                <label id="modalValue" ></label>  
+               @*  <label id="modalValueTEST" ></label> *@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -160,17 +163,30 @@
 
            // var issueId = $('#issueList').find('td:first-child').text();
            // var issueId = $('#issueList tr:first').find('td:first').text(); // WORKING
-            var issueId = $(this).closest('tr').find('td:first').text();
+            var issueId = $(this).closest('tr').find('td:first').text(); // GET the ID of the selected Row
+            var issueName = $(this).closest('tr').find('td:nth-child(2)').text(); // Assuming IssueName is in the second column
+
+            // Update the modal's title with the IssueName
+            $('#btnAddPartsModal').attr('data-value', issueId);
+            $('#modalIssueName').text(issueName);
             console.log('Issue ID:', issueId);
 
             refreshPartsInIssue(issueId);
-          
+            $('#btnAddPartsModal').data('value', issueId);
             $('#problemDetailsModal').modal('show');
 
-            // Output the value of the first column
+          
 
-            // Now you can perform any further actions based on the value of the first column
+            
+
+            // REMOVE THE CHECKED ITEMS ON THE LIST EVERYTIME THE MODAL CLOSES
         });
+        $('#problemDetailsModal').on('hidden.bs.modal', function () {
+            // Uncheck all checkboxes
+            $('input[name="selectedRows"]').prop('checked', false);
+        });
+  
+        
     
         // Pass data of checked check box
         $('#saveSelectedRowsBtn').click(function () {
@@ -178,10 +194,24 @@
             var issueId = $('#modalValue').text();  
             $('input[name="selectedRows"]:checked').each(function () {
                 var partsId = $(this).val();
+                checkedRows.push({ partsId: partsId, issueId: issueId });
              //   var name = $(this).closest('tr').find('td:eq(1)').text(); // Get the name from the second column
              //   var price = $(this).closest('tr').find('td:eq(2)').text(); // Get Price from the 3rd column
-                checkedRows.push({ partsId: partsId, issueId: issueId });
+               
              // checkedRows.push({ id: id, name: name, price: price });
+
+                // var issueId = $(this).closest('tr').find('td:first').text();
+
+                // // Your logic to handle the issueId
+                // console.log("Issue ID of the selected row: " + issueId);
+
+                // // Rest of your code...
+                // var checkedRows = [];
+                // $('input[name="selectedRows"]:checked').each(function () {
+                //     var partsId = $(this).val();
+                //     checkedRows.push({ partsId: partsId, issueId: issueId });
+                // });
+               
             });
             console.log(checkedRows); // Output checked rows to console
 
@@ -254,7 +284,9 @@
             success: function (data) {
                 // On successful response, call a function to populate the table
 
+
                 populateIssueWithPartsTable(data);
+               
             },
             error: function (xhr, status, error) {
                 console.error(xhr.responseText);
